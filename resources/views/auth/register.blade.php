@@ -18,7 +18,7 @@
                     class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4">
                     Already registered?
                 </a>
-                <button type="submit" class="btn">
+                <button type="submit" class="btn" data-testid="register-button">
                     Register
                 </button>
             </div>
