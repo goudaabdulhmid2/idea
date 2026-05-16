@@ -1,20 +1,21 @@
 <?php
 
+use App\Models\Idea;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Idea;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('steps', function (Blueprint $table) {
+        Schema::create('steps', function (Blueprint $table): void {
             $table->id();
-            $table->string("description", 255);
-            $table->boolean("is_completed")->default(false);
+            $table->string('description', 255);
+            $table->boolean('is_completed')->default(false);
             $table->foreignIdFor(Idea::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

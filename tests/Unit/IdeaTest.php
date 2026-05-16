@@ -1,18 +1,16 @@
 <?php
+
 use App\Models\Idea;
 use App\Models\User;
-use App\Models\Step;
 
-test('it belongs to a user', function () {
+test('it belongs to a user', function (): void {
     $idea = Idea::factory()->create();
-
 
     expect($idea->user)->toBeInstanceOf(User::class);
 });
 
-test('it has many steps', function () {
+test('it has many steps', function (): void {
     $idea = Idea::factory()->create();
-
 
     expect($idea->steps)->not->toBeNull();
 
