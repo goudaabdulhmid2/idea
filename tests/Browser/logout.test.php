@@ -2,7 +2,7 @@
 
 use App\Models\User;
 
-it('log out a user', function () {
+it('log out a user', function (): void {
     $user = User::factory()->create();
 
     $this->actingAs($user);

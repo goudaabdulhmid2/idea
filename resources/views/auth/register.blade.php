@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Register">
     <x-form.form title="Create an Account" description="Join us to start building your ideas.">
         <form method="POST" action="{{ route('register') }}" class="space-y-5">
             @csrf

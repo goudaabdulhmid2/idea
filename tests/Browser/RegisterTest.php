@@ -1,7 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
-it('registers a new user', function () {
+it('registers a new user', function (): void {
     visit(route('register'))
         ->fill('name', 'Hamid')
         ->fill('email', 'hamid@gmail.com')

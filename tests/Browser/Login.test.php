@@ -2,7 +2,7 @@
 
 use App\Models\User;
 
-it('log in a user', function () {
+it('log in a user', function (): void {
     $user = User::factory()->create([
         'email' => 'hamid@gmail.com',
         'password' => bcrypt('123456789'),

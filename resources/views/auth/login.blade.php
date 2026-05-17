@@ -1,14 +1,16 @@
-<x-layout>
+<x-layout title="Login">
     <x-form.form title="Welcome Back" description="Sign in to your account to continue.">
         <form method="POST" action="{{ route('login') }}" class="space-y-5">
             @csrf
 
-            <x-form.field name="email" type="email" label="Email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-form.field name="email" type="email" label="Email" :value="old('email')" required autofocus
+                autocomplete="username" />
 
             <x-form.field name="password" type="password" label="Password" required autocomplete="current-password" />
 
             <div class="flex items-center">
-                <input id="remember" type="checkbox" name="remember" class="h-4 w-4 rounded border-border text-primary focus:ring-primary focus:ring-offset-background bg-background">
+                <input id="remember" type="checkbox" name="remember"
+                    class="h-4 w-4 rounded border-border text-primary focus:ring-primary focus:ring-offset-background bg-background">
                 <label for="remember" class="ml-2 text-sm font-medium text-foreground">Remember me</label>
             </div>
 

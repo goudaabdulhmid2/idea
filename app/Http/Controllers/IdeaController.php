@@ -4,18 +4,38 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enums\IdeaStatus;
 use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
 use App\Models\Idea;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IdeaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): void
+    public function index(Request $request): View
     {
-        //
+        $user = Auth::user();
+
+        $status = $request->status;
+
+        if (! in_array($status, IdeaStatus::values())) {
+            $status = null;
+        }
+
+        $ideas = $user->ideas()
+            ->when($status, fn ($query) => $query->where('status', $status))
+            ->orderByDesc('created_at')
+            ->paginate(10);
+
+        $statusCounts = Idea::statusCounts($user);
+
+        return view('idea.index', ['ideas' => $ideas, 'statusCounts' => $statusCounts]);
+
     }
 
     /**
@@ -37,9 +57,10 @@ class IdeaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Idea $idea): void
+    public function show(Idea $idea): View
     {
-        //
+
+        return view('idea.show', ['idea' => $idea]);
     }
 
     /**
