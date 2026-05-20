@@ -14,7 +14,7 @@ class UpdateIdeaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->id === $this->route('idea')->user_id;
     }
 
     /**
@@ -25,7 +25,9 @@ class UpdateIdeaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'status' => ['required', \Illuminate\Validation\Rule::enum(\App\Enums\IdeaStatus::class)],
         ];
     }
 }

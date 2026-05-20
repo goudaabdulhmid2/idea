@@ -20,5 +20,9 @@ Route::middleware('guest')->group(function (): void {
 Route::middleware('auth')->group(function (): void {
     Route::post('/logout', [SessionsController::class, 'destroy'])->name('logout');
     Route::get('/ideas', [IdeaController::class, 'index'])->name('ideas');
-    Route::get('/ideas/{id}', [IdeaController::class, 'show'])->name('idea.show');
+    Route::get('/ideas/{idea}', [IdeaController::class, 'show'])->name('idea.show');
+    Route::post('/ideas', [IdeaController::class, 'store'])->name('idea.store');
+    Route::get('/ideas/{idea}/edit', [IdeaController::class, 'edit'])->name('idea.edit');
+    Route::put('/ideas/{idea}', [IdeaController::class, 'update'])->name('idea.update');
+    Route::delete('/ideas/{idea}', [IdeaController::class, 'destroy'])->name('idea.destroy');
 });

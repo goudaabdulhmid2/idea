@@ -45,15 +45,17 @@ class IdeaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreIdeaRequest $request): void
+    public function store(StoreIdeaRequest $request)
     {
-        //
+        Auth::user()->ideas()->create($request->validated());
+
+        return to_route('ideas')->with('success', 'Idea created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Idea $idea): View
+    public function show(Request $request, Idea $idea): View
     {
 
         return view('idea.show', ['idea' => $idea]);
@@ -62,24 +64,32 @@ class IdeaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Idea $idea): void
+    public function edit(Idea $idea): View
     {
-        //
+        abort_if($idea->user_id !== Auth::id(), 403);
+
+        return view('idea.edit', ['idea' => $idea]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateIdeaRequest $request, Idea $idea): void
+    public function update(UpdateIdeaRequest $request, Idea $idea)
     {
-        //
+        $idea->update($request->validated());
+
+        return to_route('idea.show', $idea)->with('success', 'Idea updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Idea $idea): void
+    public function destroy(Idea $idea)
     {
-        //
+        abort_if($idea->user_id !== Auth::id(), 403);
+
+        $idea->delete();
+
+        return to_route('ideas')->with('success', 'Idea deleted successfully.');
     }
 }

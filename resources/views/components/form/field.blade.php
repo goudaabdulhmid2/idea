@@ -9,7 +9,5 @@
         value="{{ $value }}" 
         {{ $attributes->merge(['class' => 'input']) }}
     >
-    @error($name)
-        <p class="error mt-1">{{ $message }}</p>
-    @enderror
+    <x-form.error :name="$name" class="mt-1" />
 </div>
