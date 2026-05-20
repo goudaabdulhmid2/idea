@@ -49,11 +49,11 @@ class Idea extends Model
         return collect($result);
     }
 
-    public function scopeStatus($query, $status)
+    public function scopeStatus($query, ?IdeaStatus $status)
     {
         return $query->when(
             $status,
-            fn($q) => $q->where('status', $status)
+            fn($q) => $q->where('status', $status->value)
         );
     }
 
