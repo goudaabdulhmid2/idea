@@ -49,6 +49,14 @@ class Idea extends Model
         return collect($result);
     }
 
+    public function scopeStatus($query, $status)
+    {
+        return $query->when(
+            $status,
+            fn($q) => $q->where('status', $status)
+        );
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

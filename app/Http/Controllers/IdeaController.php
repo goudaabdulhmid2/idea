@@ -19,24 +19,20 @@ class IdeaController extends Controller
      */
     public function index(Request $request): View
     {
-        $user = Auth::user();
+            $user = Auth::user();
 
-        $status = $request->status;
+            $status = $request->enum('status', IdeaStatus::class);
 
-        if (! in_array($status, IdeaStatus::values())) {
-            $status = null;
+            $ideas = $user->ideas()
+                ->status($status)
+                ->latest()
+                ->paginate(10);
+
+            return view('idea.index', [
+                'ideas' => $ideas,
+                'statusCounts' => Idea::statusCounts($user),
+            ]);
         }
-
-        $ideas = $user->ideas()
-            ->when($status, fn ($query) => $query->where('status', $status))
-            ->orderByDesc('created_at')
-            ->paginate(10);
-
-        $statusCounts = Idea::statusCounts($user);
-
-        return view('idea.index', ['ideas' => $ideas, 'statusCounts' => $statusCounts]);
-
-    }
 
     /**
      * Show the form for creating a new resource.
